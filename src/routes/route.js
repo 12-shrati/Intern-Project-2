@@ -6,7 +6,7 @@ const internController = require('../controllers/internController')
 
 
 
-router.post('/functionup/colleges', collageController.createCollage)
+router.post('/BASE_URL/functionup/colleges', collageController.createCollage)
 
 router.post('/functionup/interns', internController.createIntern)
 

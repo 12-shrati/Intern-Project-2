@@ -9,18 +9,22 @@ const isValidRequestBody = function (data) {
 
 const createCollage = async function (req, res) {
   try {
-    var data = req.body
+    let data = req.body
     if (!isValidRequestBody(data)) {
       return res.status(400).send({ status: false, message: "enter valid parameters" })
     }
     if (!(data.name)) {
-      return res.status(400).send({ status: false, msg: "name required" })
+      return res.status(400).send({ status: false, msg: "please name required" })
     }
+    let duplicateName = await collageModel.findOne({ name: data.name })
+    if (duplicateName)
+      return res.status(400).send({ status: false, msg: "collage Name is already present" })
+
     if (!(data.fullName)) {
-      return res.status(400).send({ status: false, msg: "fullname required" })
+      return res.status(400).send({ status: false, msg: "please fullname required" })
     }
     if (!(data.logoLink)) {
-      return res.status(400).send({ status: false, msg: "logoLink required" })
+      return res.status(400).send({ status: false, msg: "please logoLink required" })
     }
 
     let collageData = await collageModel.create(data)
@@ -39,9 +43,9 @@ let getCollageDetails = async function (req, res) {
     let collageName = req.query.name
 
     if (!collageName) {
-      return res.status(400).send({ status: false, message: "name required,Bad request" })
+      return res.status(400).send({ status: false, message: "collage name required" })
     }
-    let collageData = await collageModel.findOne({ name: collageName, isDeleted: false })//.select({ name: 1, fullName: 1, logoLink: 1,_id:0 })
+    let collageData = await collageModel.findOne({ name: collageName, isDeleted: false })
 
     if (!collageData) {
       return res.status(404).send({ status: false, message: "collage not found" })
@@ -60,6 +64,7 @@ let getCollageDetails = async function (req, res) {
     res.status(200).send({ status: true, data: collageDetails })
 
   }
+  
   catch (error) {
     res.status(500).send({ msg: error.message })
   }

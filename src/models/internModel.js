@@ -18,7 +18,7 @@ const internSchema = new mongoose.Schema({
     mobile: {
         type: String,
         required: [true,"mobile number required"],
-        match:/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+        match:/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/,
         unique: true
 
     },

@@ -12,7 +12,7 @@ const isValidObjectId = function (ObjectId) {
 
 const createIntern = async function (req, res) {
   try {
-    var data = req.body
+    let data = req.body
     if (!isValidRequestBody(data)) {
       return res.status(400).send({ status: false, message: "enter valid parameters" })
     }
@@ -22,16 +22,22 @@ const createIntern = async function (req, res) {
     if (!(data.email)) {
       return res.status(400).send({ status: false, msg: "email required" })
     }
+    let duplicateEmail = await internModel.findOne({ email: data.email })
+    if (duplicateEmail)
+        return res.status(400).send({ status: false, msg: "email is already present" })
 
     if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email))) {
-      return res.status(400).send({ status: false, message: "email will be valid email address " })
+      return res.status(400).send({ status: false, message: " provide valid email address " })
     }
 
     if (!(data.mobile)) {
       return res.status(400).send({ status: false, msg: "mobile number required" })
     }
+    let duplicateMobileNo = await internModel.findOne({ mobile: data.mobile })
+    if (duplicateMobileNo)
+        return res.status(400).send({ status: false, msg: "mobile no. is already present" })
 
-    if (!(/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/.test(data.mobile))) {
+    if (!(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/.test(data.mobile))) {
       return res.status(400).send({ status: false, message: "enter valid mobile number " })
     }
 

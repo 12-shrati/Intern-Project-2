@@ -5,10 +5,11 @@ const mongoose = require('mongoose')
 const collageSchema = new mongoose.Schema({
     name: {
         type: String,
+        trim: true,
         required: [true, "name required"],
         unique: true,
         lowercase: true,
-        trim: true
+        
     },
     fullName: {
         type: String,
@@ -18,7 +19,8 @@ const collageSchema = new mongoose.Schema({
     logoLink: {
         type: String,
         required: [true, "logolink required"],
-        lowercase: true
+        lowercase: true,
+        trim : true
 
     },
     isDeleted: {
