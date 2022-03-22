@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 
 
-const collageSchema = new mongoose.Schema({
+const collegeSchema = new mongoose.Schema({
     name: {
         type: String,
         trim: true,
@@ -30,4 +30,4 @@ const collageSchema = new mongoose.Schema({
 
 }, { timestamps: true })
 
-module.exports = mongoose.model('Collage', collageSchema)
+module.exports = mongoose.model('Collage', collegeSchema)

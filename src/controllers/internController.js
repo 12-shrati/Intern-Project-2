@@ -1,5 +1,5 @@
 const internModel = require('../models/internModel')
-const collageModel = require('../models/collageModel')
+const collegeModel = require('../models/collegeModel')
 const mongoose = require('mongoose')
 
 const isValidRequestBody = function (data) {
@@ -19,6 +19,10 @@ const createIntern = async function (req, res) {
     if (!(data.name)) {
       return res.status(400).send({ status: false, msg: "name required" })
     }
+    if (data.name.trim().length==0) {
+      return res.status(400).send({ status: false, msg: "please fill the name " })
+    }
+
     if (!(data.email)) {
       return res.status(400).send({ status: false, msg: "email required" })
     }
@@ -45,16 +49,16 @@ const createIntern = async function (req, res) {
       return res.status(400).send({ status: false, msg: "collegeId required" })
     }
     if (!isValidObjectId(data.collegeId)) {
-      return res.status(400).send({ status: false, message: "Enter valid collageId" })
+      return res.status(400).send({ status: false, message: "Enter valid collegeId" })
     }
 
-    let collageData = await collageModel.findOne({ _id: data.collegeId })
-    if (!collageData) {
-      return res.status(404).send({ status: false, message: "collage id not found" })
+    let collegeData = await collegeModel.findOne({ _id: data.collegeId })
+    if (!collegeData) {
+      return res.status(404).send({ status: false, message: "college id not found" })
     }
 
     let internData = await internModel.create(data)
-    res.status(201).send({ status: true, data: internData })
+    res.status(201).send({ status: true, data: {isDeleted: false , name: internData.name, email: internData.email, moile: internData.mobile, collegeId : internData.collegeId } })
   }
   catch (error) {
     res.status(500).send({ msg: error.message })

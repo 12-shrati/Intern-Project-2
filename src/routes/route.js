@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const collageController = require('../controllers/collageController')
+const collegeController = require('../controllers/collegeController')
 const internController = require('../controllers/internController')
 
 
 
 
-router.post('/BASE_URL/functionup/colleges', collageController.createCollage)
+router.post('/BASE_URL/functionup/colleges', collegeController.createCollege)
 
 router.post('/functionup/interns', internController.createIntern)
 
-router.get('/functionup/collegeDetails', collageController.getCollageDetails)
+router.get('/functionup/collegeDetails', collegeController.getCollegeDetails)
 
 
 
