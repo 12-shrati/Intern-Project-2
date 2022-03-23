@@ -19,8 +19,8 @@ const createIntern = async function (req, res) {
     if (!(data.name)) {
       return res.status(400).send({ status: false, msg: "name required" })
     }
-    if (data.name.trim().length==0) {
-      return res.status(400).send({ status: false, msg: "please fill the name " })
+    if (data.name.trim().length == 0) {
+      return res.status(400).send({ status: false, msg: " fill the name " })
     }
 
     if (!(data.email)) {
@@ -28,7 +28,7 @@ const createIntern = async function (req, res) {
     }
     let duplicateEmail = await internModel.findOne({ email: data.email })
     if (duplicateEmail)
-        return res.status(400).send({ status: false, msg: "email is already present" })
+      return res.status(400).send({ status: false, msg: "email is already present" })
 
     if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email))) {
       return res.status(400).send({ status: false, message: " provide valid email address " })
@@ -39,7 +39,7 @@ const createIntern = async function (req, res) {
     }
     let duplicateMobileNo = await internModel.findOne({ mobile: data.mobile })
     if (duplicateMobileNo)
-        return res.status(400).send({ status: false, msg: "mobile no. is already present" })
+      return res.status(400).send({ status: false, msg: "mobile no. is already present" })
 
     if (!(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/.test(data.mobile))) {
       return res.status(400).send({ status: false, message: "enter valid mobile number " })
@@ -58,7 +58,7 @@ const createIntern = async function (req, res) {
     }
 
     let internData = await internModel.create(data)
-    return res.status(201).send({ status: true, data: {isDeleted: false , name: internData.name, email: internData.email, moile: internData.mobile, collegeId : internData.collegeId } })
+    return res.status(201).send({ status: true, data: { isDeleted: false, name: internData.name, email: internData.email, mobile: internData.mobile, collegeId: internData.collegeId } })
   }
   catch (error) {
     res.status(500).send({ msg: error.message })
